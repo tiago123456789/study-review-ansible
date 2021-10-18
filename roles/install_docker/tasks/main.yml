@@ -1,0 +1,30 @@
+---
+- name: Install common packages necessary to install docker next step
+  apt:
+    name:
+     - apt-transport-https
+     - ca-certificates 
+     - curl 
+     - software-properties-common
+    state: present
+    update_cache: yes
+
+- name: Add GPG KEY for the official docker repository
+  shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+
+- name: Add repository docker
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
+    state: present
+
+- name: Install docker
+  apt:
+    name: docker-ce 
+    state: present
+    update_cache: yes
+
+- name: Start docker service
+  service:
+    name: docker
+    state: started

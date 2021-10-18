@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+    control:
+        build: .
+        container_name: control
+        command: "tail -f /dev/null"
+        hostname:  control
+        volumes:
+            - ./:/root/ansible
+        networks:
+            - ansible_net
+    
+networks:
+    ansible_net:
+        driver: bridge
